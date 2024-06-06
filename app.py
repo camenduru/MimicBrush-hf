@@ -25,7 +25,7 @@ from huggingface_hub import snapshot_download
 
 
 
-model_dir = ms_snapshot_download('xichen/MimicBrush', cache_dir='./weights', revision='v1.0.1')
+model_dir = ms_snapshot_download('xichen/MimicBrush', cache_dir='./weights')
 snapshot_download(repo_id="runwayml/stable-diffusion-v1-5", local_dir="./stable-diffusion-v1-5")
 snapshot_download(repo_id="runwayml/stable-diffusion-inpainting", local_dir="./stable-diffusion-inpainting")
 val_configs = OmegaConf.load('./configs/inference.yaml')
