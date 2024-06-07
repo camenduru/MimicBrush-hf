@@ -24,9 +24,9 @@ from modelscope.hub.snapshot_download import snapshot_download as ms_snapshot_do
 
 
 
-sd_dir = ms_snapshot_download('xichen/cleansd', cache_dir='./cleansd')
+sd_dir = ms_snapshot_download('xichen/cleansd', cache_dir='./modelscope')
 print('=== Pretrained SD weights downloaded ===')
-model_dir = ms_snapshot_download('xichen/MimicBrush', cache_dir='./weights')
+model_dir = ms_snapshot_download('xichen/MimicBrush', cache_dir='./modelscope')
 print('=== MimicBrush weights downloaded ===')
 val_configs = OmegaConf.load('./configs/inference.yaml')
 
