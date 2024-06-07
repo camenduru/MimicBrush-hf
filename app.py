@@ -21,14 +21,13 @@ from models.depth_guider import DepthGuider
 from mimicbrush import MimicBrush_RefNet
 from data_utils import *
 from modelscope.hub.snapshot_download import snapshot_download as ms_snapshot_download
-from huggingface_hub import snapshot_download
 
 
 
+sd_dir = ms_snapshot_download('xichen/cleansd', cache_dir='./cleansd')
+print('=== Pretrained SD weights downloaded ===')
 model_dir = ms_snapshot_download('xichen/MimicBrush', cache_dir='./weights')
-snapshot_download(repo_id="runwayml/stable-diffusion-v1-5", local_dir="./stable-diffusion-v1-5")
-snapshot_download(repo_id="runwayml/stable-diffusion-inpainting", local_dir="./stable-diffusion-inpainting")
-val_configs = OmegaConf.load('./configs/inference.yaml')
+print('=== MimicBrush weights downloaded ===')
 
 # === import Depth Anything ===
 import sys
