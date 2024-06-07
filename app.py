@@ -28,6 +28,7 @@ sd_dir = ms_snapshot_download('xichen/cleansd', cache_dir='./cleansd')
 print('=== Pretrained SD weights downloaded ===')
 model_dir = ms_snapshot_download('xichen/MimicBrush', cache_dir='./weights')
 print('=== MimicBrush weights downloaded ===')
+val_configs = OmegaConf.load('./configs/inference.yaml')
 
 # === import Depth Anything ===
 import sys
