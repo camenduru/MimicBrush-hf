@@ -19,15 +19,17 @@ from models.pipeline_mimicbrush import MimicBrushPipeline
 from models.ReferenceNet import ReferenceNet
 from models.depth_guider import DepthGuider
 from mimicbrush import MimicBrush_RefNet
-from data_utils import *
+from dataset.data_utils import *
 from modelscope.hub.snapshot_download import snapshot_download as ms_snapshot_download
 import spaces
+
 
 
 sd_dir = ms_snapshot_download('xichen/cleansd', cache_dir='./modelscope')
 print('=== Pretrained SD weights downloaded ===')
 model_dir = ms_snapshot_download('xichen/MimicBrush', cache_dir='./modelscope')
 print('=== MimicBrush weights downloaded ===')
+
 val_configs = OmegaConf.load('./configs/inference.yaml')
 
 # === import Depth Anything ===
@@ -174,7 +176,6 @@ depth_guider = DepthGuider()
 referencenet = ReferenceNet.from_pretrained(ref_model_path, subfolder="unet").to(dtype=torch.float16)
 mimicbrush_model = MimicBrush_RefNet(pipe, image_encoder_path, mimicbrush_ckpt,  depth_anything_model, depth_guider, referencenet, device)
 mask_processor = VaeImageProcessor(vae_scale_factor=1, do_normalize=False, do_binarize=True, do_convert_grayscale=True)
-
 
 @spaces.GPU
 def infer_single(ref_image, target_image, target_mask, seed = -1, num_inference_steps=50, guidance_scale = 5, enable_shape_control = False):
@@ -364,4 +365,4 @@ with gr.Blocks() as demo:
                            outputs=[baseline_gallery]
                         )
 
-demo.launch()
+demo.launch(server_name="0.0.0.0")
