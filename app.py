@@ -19,7 +19,7 @@ from models.pipeline_mimicbrush import MimicBrushPipeline
 from models.ReferenceNet import ReferenceNet
 from models.depth_guider import DepthGuider
 from mimicbrush import MimicBrush_RefNet
-from dataset.data_utils import *
+from data_utils import *
 from modelscope.hub.snapshot_download import snapshot_download as ms_snapshot_download
 import spaces
 
