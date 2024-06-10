@@ -159,6 +159,7 @@ noise_scheduler = DDIMScheduler(
     steps_offset=1,
 )
 
+
 vae = AutoencoderKL.from_pretrained(vae_model_path).to(dtype=torch.float16)
 unet = UNet2DConditionModel.from_pretrained(base_model_path, subfolder="unet", in_channels=13, low_cpu_mem_usage=False, ignore_mismatched_sizes=True).to(dtype=torch.float16)
 
@@ -177,13 +178,14 @@ referencenet = ReferenceNet.from_pretrained(ref_model_path, subfolder="unet").to
 mimicbrush_model = MimicBrush_RefNet(pipe, image_encoder_path, mimicbrush_ckpt,  depth_anything_model, depth_guider, referencenet, device)
 mask_processor = VaeImageProcessor(vae_scale_factor=1, do_normalize=False, do_binarize=True, do_convert_grayscale=True)
 
-@spaces.GPU
+
 def infer_single(ref_image, target_image, target_mask, seed = -1, num_inference_steps=50, guidance_scale = 5, enable_shape_control = False):
     #return ref_image
     """
     mask: 0/1 1-channel  np.array
     image: rgb           np.array
     """
+
     ref_image = ref_image.astype(np.uint8)
     target_image = target_image.astype(np.uint8)
     target_mask  = target_mask .astype(np.uint8)
@@ -228,6 +230,7 @@ def infer_single(ref_image, target_image, target_mask, seed = -1, num_inference_
     return pred, depth_pred.astype(np.uint8)
 
 
+
 def inference_single_image(ref_image, 
                            tar_image, 
                            tar_mask, 
@@ -246,10 +249,12 @@ def inference_single_image(ref_image,
 def run_local(base,
               ref,
               *args):
-    image = base["image"].convert("RGB")
-    mask = base["mask"].convert("L")
+    image = base["background"].convert("RGB") #base["image"].convert("RGB")
+    mask = base["layers"][0]  #base["mask"].convert("L")
+    
     image = np.asarray(image)
-    mask = np.asarray(mask)
+    mask = np.asarray(mask)[:,:,-1]
+    #print(image.shape, mask.shape, mask.max(), mask.min())
     mask = np.where(mask > 128, 1, 0).astype(np.uint8)
     
 
@@ -294,18 +299,22 @@ with gr.Blocks() as demo:
                 
                 gr.Markdown("### Tutorial")
                 gr.Markdown("1. Upload the source image and the reference image")
-                gr.Markdown("2. Mask the to-edit region on the source image  ")
+                gr.Markdown("2. Select the \"draw button\" to mask the to-edit region on the source image  ")
                 gr.Markdown("3. Click generate ")
                 gr.Markdown("#### You shoud click \"keep the original shape\" to conduct texture transfer  ")
-
     
         gr.Markdown("# Upload the source image and reference image")
-        gr.Markdown("### Tips: you could adjust the brush size by at the top right")
+        gr.Markdown("### Tips: you could adjust the brush size")
 
         with gr.Row():
-            base = gr.Image(label="Background", source="upload", tool="sketch", type="pil", height=512, brush_color='#FFFFFF', mask_opacity=0.5, brush_radius = 100)
-            ref = gr.Image(label="Reference", source="upload", type="pil", height=512 )
-        run_local_button = gr.Button(label="Generate", value="Run")
+            base = gr.ImageEditor(  label="Source",
+                                    type="pil",
+                                    brush=gr.Brush(colors=["#000000"],default_size = 50,color_mode = "fixed"),
+                                    layers = False,
+                                    interactive=True
+                                )
+            ref = gr.Image(label="Reference", sources="upload", type="pil", height=512)
+        run_local_button = gr.Button(value="Run")
         
 
 
@@ -316,6 +325,7 @@ with gr.Blocks() as demo:
                 './demo_example/005_source.png',
                 './demo_example/005_reference.png', 
             ],
+   
             [
                 './demo_example/000_source.png',
                 './demo_example/000_reference.png', 
@@ -344,6 +354,7 @@ with gr.Blocks() as demo:
                 './demo_example/007_source.png',
                 './demo_example/007_reference.png', 
             ],
+
         ],
 
         inputs=[
