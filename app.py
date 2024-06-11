@@ -24,7 +24,7 @@ from modelscope.hub.snapshot_download import snapshot_download as ms_snapshot_do
 import spaces
 
 
-'''
+
 sd_dir = ms_snapshot_download('xichen/cleansd', cache_dir='./modelscope')
 print('=== Pretrained SD weights downloaded ===')
 model_dir = ms_snapshot_download('xichen/MimicBrush', cache_dir='./modelscope')
@@ -62,7 +62,7 @@ image_encoder_path = val_configs.model_path.image_encoder_path
 ref_model_path = val_configs.model_path.pretrained_reference_path
 mimicbrush_ckpt = val_configs.model_path.mimicbrush_ckpt_path
 device = "cuda"
-'''
+
 
 
 def pad_img_to_square(original_image, is_mask=False):
@@ -148,7 +148,7 @@ def vis_mask(image, mask):
     return image 
 
 
-'''
+
 noise_scheduler = DDIMScheduler(
     num_train_timesteps=1000,
     beta_start=0.00085,
@@ -177,7 +177,7 @@ depth_guider = DepthGuider()
 referencenet = ReferenceNet.from_pretrained(ref_model_path, subfolder="unet").to(dtype=torch.float16)
 mimicbrush_model = MimicBrush_RefNet(pipe, image_encoder_path, mimicbrush_ckpt,  depth_anything_model, depth_guider, referencenet, device)
 mask_processor = VaeImageProcessor(vae_scale_factor=1, do_normalize=False, do_binarize=True, do_convert_grayscale=True)
-'''
+
 @spaces.GPU
 def infer_single(ref_image, target_image, target_mask, seed = -1, num_inference_steps=50, guidance_scale = 5, enable_shape_control = False):
     #return ref_image
@@ -185,8 +185,7 @@ def infer_single(ref_image, target_image, target_mask, seed = -1, num_inference_
     mask: 0/1 1-channel  np.array
     image: rgb           np.array
     """
-    return ref_image, ref_image
-    """
+
     ref_image = ref_image.astype(np.uint8)
     target_image = target_image.astype(np.uint8)
     target_mask  = target_mask .astype(np.uint8)
@@ -229,7 +228,7 @@ def infer_single(ref_image, target_image, target_mask, seed = -1, num_inference_
     pred = pred[0]
     pred = np.array(pred).astype(np.uint8)
     return pred, depth_pred.astype(np.uint8)
-    """
+
 
 
 def inference_single_image(ref_image, 
