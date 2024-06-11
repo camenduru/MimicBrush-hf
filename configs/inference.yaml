@@ -1,10 +1,10 @@
 model_path:
-  mimicbrush_ckpt_path: ./modelscope/xichen/MimicBrush/mimicbrush/mimicbrush.bin
-  pretrained_reference_path: ./modelscope/xichen/cleansd/stable-diffusion-v1-5
-  pretrained_imitativer_path: ./modelscope/xichen/cleansd/stable-diffusion-inpainting
-  pretrained_vae_name_or_path: ./modelscope/xichen/MimicBrush/sd-vae-ft-mse
-  image_encoder_path: ./modelscope/xichen/MimicBrush/image_encoder
-  depth_model: ./modelscope/xichen/MimicBrush/depth_model/depth_anything_vitb14.pth
+  mimicbrush_ckpt_path: ./MimicBrush/mimicbrush/mimicbrush.bin
+  pretrained_reference_path: ./cleansd/stable-diffusion-v1-5
+  pretrained_imitativer_path: ./cleansd/stable-diffusion-inpainting
+  pretrained_vae_name_or_path: ./MimicBrush/sd-vae-ft-mse
+  image_encoder_path: ./MimicBrush/image_encoder
+  depth_model: ./MimicBrush/depth_model/depth_anything_vitb14.pth
 data_path:
   test_set_name: Texture_Within # choose from [ PartComp_Cross, PartComp_Within, Texture_Cross, Texture_Within ] 
   output_dir: ./test-vis
