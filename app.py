@@ -314,7 +314,7 @@ with gr.Blocks() as demo:
         with gr.Row():
             base = gr.ImageEditor(  label="Source",
                                     type="pil",
-                                    brush=gr.Brush(colors=["#000000"],default_size = 30,color_mode = "fixed"),
+                                    brush=gr.Brush(colors=["#80FFFF"],default_size = 30,color_mode = "fixed"),
                                     layers = False,
                                     interactive=True
                                 )
