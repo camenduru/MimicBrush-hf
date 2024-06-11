@@ -184,7 +184,7 @@ mimicbrush_model = MimicBrush_RefNet(pipe, image_encoder_path, mimicbrush_ckpt, 
 mask_processor = VaeImageProcessor(vae_scale_factor=1, do_normalize=False, do_binarize=True, do_convert_grayscale=True)
 
 @spaces.GPU
-def infer_single(ref_image, target_image, target_mask, seed = -1, num_inference_steps=50, guidance_scale = 5, enable_shape_control = False, progress=gr.Progress(track_tqdm=True)):
+def infer_single(ref_image, target_image, target_mask, seed = -1, num_inference_steps=50, guidance_scale = 5, enable_shape_control = False):
     #return ref_image
     """
     mask: 0/1 1-channel  np.array
@@ -314,7 +314,7 @@ with gr.Blocks() as demo:
         with gr.Row():
             base = gr.ImageEditor(  label="Source",
                                     type="pil",
-                                    brush=gr.Brush(colors=["#80FFFF"],default_size = 30,color_mode = "fixed"),
+                                    brush=gr.Brush(colors=["#FFFFFF"],default_size = 30,color_mode = "fixed"),
                                     layers = False,
                                     interactive=True
                                 )
