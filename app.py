@@ -370,11 +370,7 @@ with gr.Blocks() as demo:
                 './demo_example/007_reference.png', 
                 1
             ],
-            [
-                './demo_example/008_source.png',
-                './demo_example/008_reference.png', 
-                1
-            ],
+
         ],
 
         inputs=[
