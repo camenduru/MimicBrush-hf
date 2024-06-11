@@ -24,11 +24,16 @@ from modelscope.hub.snapshot_download import snapshot_download as ms_snapshot_do
 import spaces
 
 
-
-sd_dir = ms_snapshot_download('xichen/cleansd', cache_dir='./modelscope')
+from huggingface_hub import snapshot_download
+snapshot_download(repo_id="xichenhku/cleansd", local_dir="./cleansd")
 print('=== Pretrained SD weights downloaded ===')
-model_dir = ms_snapshot_download('xichen/MimicBrush', cache_dir='./modelscope')
+snapshot_download(repo_id="xichenhku/MimicBrush", local_dir="./MimicBrush")
 print('=== MimicBrush weights downloaded ===')
+
+#sd_dir = ms_snapshot_download('xichen/cleansd', cache_dir='./modelscope')
+#print('=== Pretrained SD weights downloaded ===')
+#model_dir = ms_snapshot_download('xichen/MimicBrush', cache_dir='./modelscope')
+#print('=== MimicBrush weights downloaded ===')
 
 val_configs = OmegaConf.load('./configs/inference.yaml')
 
@@ -309,7 +314,7 @@ with gr.Blocks() as demo:
         with gr.Row():
             base = gr.ImageEditor(  label="Source",
                                     type="pil",
-                                    brush=gr.Brush(colors=["#000000"],default_size = 50,color_mode = "fixed"),
+                                    brush=gr.Brush(colors=["#000000"],default_size = 30,color_mode = "fixed"),
                                     layers = False,
                                     interactive=True
                                 )
