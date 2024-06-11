@@ -329,46 +329,61 @@ with gr.Blocks() as demo:
             [
                 './demo_example/005_source.png',
                 './demo_example/005_reference.png', 
+                0
+
+            ],
+            [
+                './demo_example/004_source.png',
+                './demo_example/004_reference.png', 
+                0
             ],
    
             [
                 './demo_example/000_source.png',
                 './demo_example/000_reference.png', 
-            ],
-            [
-                './demo_example/001_source.png',
-                './demo_example/001_reference.png', 
-            ],
-            [
-                './demo_example/002_source.png',
-                './demo_example/002_reference.png', 
+                0
             ],
             [
                 './demo_example/003_source.png',
                 './demo_example/003_reference.png', 
+                0
             ],     
-            [
-                './demo_example/004_source.png',
-                './demo_example/004_reference.png', 
-            ],
+
             [
                 './demo_example/006_source.png',
                 './demo_example/006_reference.png', 
+                0
             ],
+            [
+                './demo_example/001_source.png',
+                './demo_example/001_reference.png', 
+                1
+            ],
+            [
+                './demo_example/002_source.png',
+                './demo_example/002_reference.png', 
+                1
+            ],
+
             [
                 './demo_example/007_source.png',
                 './demo_example/007_reference.png', 
+                1
             ],
-
+            [
+                './demo_example/008_source.png',
+                './demo_example/008_reference.png', 
+                1
+            ],
         ],
 
         inputs=[
                 base,
-                ref
-                    ],
+                ref,
+                enable_shape_control
+                ],
                 cache_examples=False,
                 examples_per_page=100)
-
 
     run_local_button.click(fn=run_local, 
                            inputs=[base, 
